@@ -98,7 +98,7 @@
                 android:textColor="#3F61B5" />
 
             <Button
-                android:id="@+id/login_btn"
+                android:id="@+id/register_btn"
                 android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"

@@ -30,31 +30,27 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener = item -> {
 
-            Fragment selectedFragment = null;
-            selectedFragment = new MainFragment();
-            switch (item.getItemId()) {
-                case R.id.nav_home:
-                    selectedFragment = new MainFragment();
-                    break;
-                case R.id.nav_favourite:
-                    selectedFragment = new FavouriteFragment();
-                    break;
-                case R.id.nav_profile:
-                    selectedFragment = new ProfileFragment();
-                    break;
-            }
-
-
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, selectedFragment)
-                    .commit();
-            return true;
+        Fragment selectedFragment = null;
+        selectedFragment = new MainFragment();
+        switch (item.getItemId()) {
+            case R.id.nav_home:
+                selectedFragment = new MainFragment();
+                break;
+            case R.id.nav_favourite:
+                selectedFragment = new FavouriteFragment();
+                break;
+            case R.id.nav_profile:
+                selectedFragment = new ProfileFragment();
+                break;
         }
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, selectedFragment)
+                .commit();
+        return true;
     };
 
 
