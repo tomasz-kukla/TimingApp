@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "59603826883",
+    "project_id": "timing-app-f2506",
+    "storage_bucket": "timing-app-f2506.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:59603826883:android:41538de28c4d058d328a76",
+        "android_client_info": {
+          "package_name": "com.example.timingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "59603826883-v14q4j2l2d4ot72g0vu5bd9c63f3s4fa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7Gb2vDTUHwTX0FcfcZSrRhbjAZN6jS1I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "59603826883-v14q4j2l2d4ot72g0vu5bd9c63f3s4fa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
