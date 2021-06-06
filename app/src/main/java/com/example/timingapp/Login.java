@@ -8,19 +8,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class
 Login extends AppCompatActivity {
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mAuth = FirebaseAuth.getInstance();
 
         configurateLink();
         onLogin();
     }
 
-    private void configurateLink(){
+
+    private void configurateLink() {
         TextView textView = (TextView) findViewById(R.id.activity_login_link);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,7 +36,7 @@ Login extends AppCompatActivity {
 
     }
 
-    private void onLogin(){
+    private void onLogin() {
         Button btn = (Button) findViewById(R.id.login_btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,8 +45,6 @@ Login extends AppCompatActivity {
             }
         });
     }
-
-
 
 
 }
