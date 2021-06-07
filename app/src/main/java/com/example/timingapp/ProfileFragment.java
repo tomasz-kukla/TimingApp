@@ -146,7 +146,15 @@ public class ProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getActivity(), Login.class);
+                startActivity(intent);
 
+            }
+        });
 
 
 
