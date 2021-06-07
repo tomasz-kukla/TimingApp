@@ -2,9 +2,15 @@
     <string name="app_name">Timing App</string>
     <string name="login_email">Email</string>
     <string name="login_pass">Password</string>
+
     <string name="register_user">Username</string>
     <string name="register_pass">Password</string>
     <string name="register_email">Email</string>
     <string name="register_phone">Phone</string>
+
+    <string name="profile_user">Username</string>
+    <string name="profile_pass">Password</string>
+    <string name="profile_email">Email</string>
+    <string name="profile_phone">Phone</string>
 
 </resources>
