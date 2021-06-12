@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +17,18 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import org.w3c.dom.Text;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
+import retrofit2.http.Body;
+import retrofit2.http.POST;
+
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,7 +40,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        configurateLink();
+        configureLink();
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -44,22 +54,20 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
     }
 
-    private void configurateLink() {
+    private void configureLink() {
         TextView textView = (TextView) findViewById(R.id.activity_login_link);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        textView.setOnClickListener(v -> finish());
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.register_btn) {
             registerUser();
+
         }
     }
+
+
 
     private void registerUser() {
         String email = editEmail.getText().toString().trim();
@@ -103,19 +111,16 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             return;
         }
 
-        mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    User user = new User(username,email,phone);
-                    //TODO Tutaj rzucić POST z userem
-                    Toast.makeText(Register.this, "Authentication confirmed.",
-                            Toast.LENGTH_SHORT).show();
-                    updateUI();
-                } else {
-                    Toast.makeText(Register.this, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show();
-                }
+        mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                User user = new User(username,email,phone);
+                sendCredentials(email, password);
+                Toast.makeText(Register.this, "Authentication confirmed.",
+                        Toast.LENGTH_SHORT).show();
+                updateUI();
+            } else {
+                Toast.makeText(Register.this, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -123,4 +128,28 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private void updateUI() {
         finish();
     }
+
+    private void sendCredentials(String email, String password) {
+
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+
+            if (task.isSuccessful()) {
+                FirebaseUser user = mAuth.getCurrentUser();
+                String userID = user.getUid();
+                String data = "{ " + "userID" + ":" + '"' + userID + '"' + " }";
+
+                
+
+                Toast.makeText(Register.this, "ID user:"+userID,Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
+
+
+        FirebaseAuth.getInstance().signOut();
+
+    }
+
 }
