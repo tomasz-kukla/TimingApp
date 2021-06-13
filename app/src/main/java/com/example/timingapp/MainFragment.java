@@ -1,5 +1,7 @@
 package com.example.timingapp;
 
+
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -8,11 +10,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 
 import java.util.List;
 
@@ -22,6 +29,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MainFragment#newInstance} factory method to
@@ -29,7 +37,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class MainFragment extends Fragment {
 
-    private TextView show;
+    GridView gridView;
+    ShowAdapter showAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -70,16 +79,12 @@ public class MainFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-
-        show = view.findViewById(R.id.main_frag_element);
+        gridView = view.findViewById(R.id.gridViewMain);
 
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -91,32 +96,66 @@ public class MainFragment extends Fragment {
                 .build();
 
         JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
-        Call<List<Series>>  call = jsonPlaceHolderApi.getShows();
+        Call<List<Series>> call = jsonPlaceHolderApi.getShows();
+
         call.enqueue(new Callback<List<Series>>() {
             @Override
             public void onResponse(Call<List<Series>> call, Response<List<Series>> response) {
                 if(!response.isSuccessful()){
-                    show.setText(new StringBuilder().append("Code:").append(response.code()).toString());
-                }
-                List<Series> series = response.body();
 
-                for(Series serie: series){
-                    String content = serie.getName() + "\n";
-                    show.append(content);
                 }
+                gridView.setAdapter(new ShowAdapter(response.body(),getActivity().getApplicationContext()));
             }
 
             @Override
             public void onFailure(Call<List<Series>> call, Throwable t) {
-                show.setText(t.getMessage());
             }
         });
 
-
-        SharedPreferences settings = this.getActivity().getSharedPreferences("PREFS", 0);
-
+                SharedPreferences settings = this.getActivity().getSharedPreferences("PREFS", 0);
         return view;
+
     }
+
+    public class ShowAdapter extends BaseAdapter{
+        public List<Series> seriesList;
+        public Context context;
+
+        public ShowAdapter(List<Series> seriesList, Context context) {
+            this.seriesList = seriesList;
+            this.context = context;
+        }
+
+
+        @Override
+        public int getCount() {
+            return seriesList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = LayoutInflater.from(context).inflate(R.layout.row_data, null);
+
+            TextView name = view.findViewById(R.id.showTitle);
+
+            name.setText(seriesList.get(position).getName());
+
+            return view;
+        }
+
+    }
+
+
 
 
 

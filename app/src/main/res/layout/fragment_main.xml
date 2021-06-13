@@ -1,28 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="8dp"
+    android:layout_height="fill_parent"
+    android:background="#BAFFFFFF"
     tools:context=".MainFragment">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
+    <FrameLayout
+        android:layout_width="fill_parent"
         android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/main_frag_element"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="1200dp"
             android:layout_height="match_parent"
-            android:textSize="30sp"
-            android:textColor="#FFF"
-            android:gravity="center"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="10dp"/>
+            android:orientation="horizontal">
 
+            <GridView
+                android:id="@+id/gridViewMain"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_margin="10dp"
+                android:columnWidth="200dp"
+                android:gravity="center"
+                android:horizontalSpacing="1dp"
+                android:numColumns="4"
+                android:scrollbarAlwaysDrawHorizontalTrack="true"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                android:stretchMode="none"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:verticalSpacing="1dp"/>
+        </LinearLayout>
+    </FrameLayout>
 
-    </androidx.core.widget.NestedScrollView>
-
-
-
-</FrameLayout>
+</HorizontalScrollView>
