@@ -18,6 +18,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -81,30 +84,43 @@ public class ShowFragment extends Fragment {
         watch_list = view.findViewById(R.id.watch_list_btn);
 
         String name = getArguments().getString("name");
-        String id = getArguments().getString("id");
+        String showId = getArguments().getString("id");
 
         show_name.setText(name);
-        show_id.setText(id);
-//        Toast.makeText(getActivity(), "Name: " +name ,Toast.LENGTH_SHORT).show();
+        show_id.setText(showId);
 
-        watch_list.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                FirebaseUser user = mAuth.getCurrentUser();
-                String userID = user.getUid();
+        watch_list.setOnClickListener(v -> {
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            FirebaseUser user = mAuth.getCurrentUser();
+            String userId = user.getUid();
 
-                Gson gson = new GsonBuilder()
-                        .setLenient()
-                        .create();
+            watch_list.setEnabled(false);
+            Toast.makeText(getActivity(), "Movie Added To Watch List",Toast.LENGTH_SHORT).show();
 
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl("http://10.0.2.2:8082/")
-                        .addConverterFactory(GsonConverterFactory.create(gson))
-                        .build();
+            Gson gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
 
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://10.0.2.2:8082/")
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+            Users_Shows users_shows = new Users_Shows(userId, showId);
+            JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+            Call<Users_Shows> call = jsonPlaceHolderApi.createUserShow(userId, showId, users_shows);
 
-            }
+            call.enqueue(new Callback<Users_Shows>() {
+                @Override
+                public void onResponse(Call<Users_Shows> call, Response<Users_Shows> response) {
+
+                }
+
+                @Override
+                public void onFailure(Call<Users_Shows> call, Throwable t) {
+
+                }
+            });
+
         });
 
 
