@@ -16,6 +16,14 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
@@ -86,9 +94,6 @@ public class ProfileFragment extends Fragment {
         String uid = user.getUid();
         String phone = user.getPhoneNumber();
 
-
-        Toast.makeText(getActivity(),"Email is: "+ uid,Toast.LENGTH_SHORT).show();
-
         SharedPreferences settings = this.getActivity().getSharedPreferences("PREFS", 0);
         etEmail.setText(settings.getString(email, email));
         etUsername.setText(settings.getString(uid, uid)); //TODO change -> uid username
@@ -128,9 +133,32 @@ public class ProfileFragment extends Fragment {
         }
         });
 
-
         deleteBtn.setOnClickListener(v -> {
             user.delete();
+
+            Gson gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://10.0.2.2:8082/")
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+
+            JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+
+            Call<Void> call =  jsonPlaceHolderApi.deleteUser(uid);
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    Toast.makeText(getActivity(),"User deleted successfully!", Toast.LENGTH_SHORT).show();
+                }
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+
+                }
+            });
+
             Intent intent = new Intent(getActivity(), Login.class);
             startActivity(intent);
         });
@@ -140,9 +168,6 @@ public class ProfileFragment extends Fragment {
             startActivity(intent);
 
         });
-
-
-
 
         return view;
     }

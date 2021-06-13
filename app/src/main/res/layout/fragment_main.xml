@@ -3,14 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="8dp"
     tools:context=".MainFragment">
 
-    <TextView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="MAIN Fragment"
-        android:textSize="30sp"
-        android:background="@color/white"
-        android:gravity="center"/>
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/main_frag_element"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="30sp"
+            android:textColor="#FFF"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"/>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
 
 </FrameLayout>
