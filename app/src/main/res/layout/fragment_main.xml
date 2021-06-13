@@ -1,16 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
+    android:background="#BAFFFFFF"
     tools:context=".MainFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="MAIN Fragment"
-        android:textSize="30sp"
-        android:background="@color/white"
-        android:gravity="center"/>
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="1200dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-</FrameLayout>
+                        <GridView
+                            android:id="@+id/gridViewMain"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_margin="10dp"
+                            android:columnWidth="200dp"
+                            android:gravity="center"
+                            android:horizontalSpacing="1dp"
+                            android:numColumns="4"
+                            android:scrollbarAlwaysDrawHorizontalTrack="true"
+                            android:scrollbarAlwaysDrawVerticalTrack="true"
+                            android:stretchMode="none"
+                            android:textColor="@color/white"
+                            android:textSize="30sp"
+                            android:verticalSpacing="1dp"/>
+                </LinearLayout>
+        </FrameLayout>
+
+</HorizontalScrollView>

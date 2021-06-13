@@ -1,5 +1,8 @@
 package com.example.timingapp;
 
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,12 +11,29 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ListAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MainFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class MainFragment extends Fragment {
+
+    GridView gridView;
+    ShowAdapter showAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,14 +73,84 @@ public class MainFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        gridView = view.findViewById(R.id.gridViewMain);
+
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:8082/")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+        Call<List<Series>>  call = jsonPlaceHolderApi.getShows();
+
+        call.enqueue(new Callback<List<Series>>() {
+            @Override
+            public void onResponse(Call<List<Series>> call, Response<List<Series>> response) {
+                if(!response.isSuccessful()){
+
+                }
+                gridView.setAdapter(new ShowAdapter(response.body(),getActivity().getApplicationContext()));
+            }
+
+            @Override
+            public void onFailure(Call<List<Series>> call, Throwable t) {
+            }
+        });
+
+        SharedPreferences settings = this.getActivity().getSharedPreferences("PREFS", 0);
+        return view;
+
     }
+
+    public class ShowAdapter extends BaseAdapter{
+        public List<Series> seriesList;
+        public Context context;
+
+        public ShowAdapter(List<Series> seriesList, Context context) {
+            this.seriesList = seriesList;
+            this.context = context;
+        }
+
+
+        @Override
+        public int getCount() {
+            return seriesList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = LayoutInflater.from(context).inflate(R.layout.row_data, null);
+
+            TextView name = view.findViewById(R.id.showTitle);
+
+            name.setText(seriesList.get(position).getName());
+
+            return view;
+        }
+
+    }
+
+
 
 
 

@@ -117,7 +117,7 @@ public class ProfileFragment extends Fragment {
 
                         }
                     });
-        if (passwordIO.length() != 0) {
+        if (passwordIO.length() != 0 && passwordIO.length()>=6) {
             user.updatePassword(passwordIO)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
