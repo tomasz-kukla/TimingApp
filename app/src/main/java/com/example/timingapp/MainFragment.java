@@ -2,15 +2,19 @@ package com.example.timingapp;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ListAdapter;
@@ -21,6 +25,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -38,7 +43,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainFragment extends Fragment {
 
     GridView gridView;
-    ShowAdapter showAdapter;
+    public static List<Series> seriesList;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -86,6 +92,8 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         gridView = view.findViewById(R.id.gridViewMain);
 
+        seriesList = new ArrayList<>();
+
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -101,10 +109,32 @@ public class MainFragment extends Fragment {
         call.enqueue(new Callback<List<Series>>() {
             @Override
             public void onResponse(Call<List<Series>> call, Response<List<Series>> response) {
-                if(!response.isSuccessful()){
+                if(!response.isSuccessful()){;}
 
-                }
+                seriesList = response.body();
+
                 gridView.setAdapter(new ShowAdapter(response.body(),getActivity().getApplicationContext()));
+
+                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        ShowFragment showFragment = new ShowFragment();
+                        Bundle args = new Bundle();
+                        args.putString("name", seriesList.get(position).getName());
+                        args.putString("id", seriesList.get(position).getId());
+
+                        Toast.makeText(getActivity(), "Name: " +seriesList.get(position).getId() ,Toast.LENGTH_SHORT).show();
+
+                        showFragment.setArguments(args);
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.add(R.id.fragment_container, showFragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+                    }
+                });
             }
 
             @Override
@@ -112,7 +142,7 @@ public class MainFragment extends Fragment {
             }
         });
 
-                SharedPreferences settings = this.getActivity().getSharedPreferences("PREFS", 0);
+        SharedPreferences settings = this.getActivity().getSharedPreferences("PREFS", 0);
         return view;
 
     }

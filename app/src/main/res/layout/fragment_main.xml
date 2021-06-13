@@ -18,7 +18,8 @@
                 android:id="@+id/gridViewMain"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_margin="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
                 android:columnWidth="200dp"
                 android:gravity="center"
                 android:horizontalSpacing="1dp"
@@ -28,7 +29,7 @@
                 android:stretchMode="none"
                 android:textColor="@color/white"
                 android:textSize="30sp"
-                android:verticalSpacing="1dp"/>
+                android:verticalSpacing="1dp" />
         </LinearLayout>
     </FrameLayout>
 
