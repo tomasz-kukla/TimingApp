@@ -16,6 +16,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,6 +28,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -136,20 +143,35 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             if (task.isSuccessful()) {
                 FirebaseUser user = mAuth.getCurrentUser();
                 String userID = user.getUid();
-                String data = "{ " + "userID" + ":" + '"' + userID + '"' + " }";
 
-                
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
 
-                Toast.makeText(Register.this, "ID user:"+userID,Toast.LENGTH_SHORT).show();
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://10.0.2.2:8082/")
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .build();
 
+                Users users = new Users(userID);
+                JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+                Call<Users> call = jsonPlaceHolderApi.createUser(users);
+
+                call.enqueue(new Callback<Users>() {
+                    @Override
+                    public void onResponse(Call<Users> call, Response<Users> response) {
+                        if(!response.isSuccessful()){
+                            Toast.makeText(Register.this, "Database User Creation Completed",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<Users> call, Throwable t) {
+
+                    }
+                });
             }
         });
 
-
-
-
         FirebaseAuth.getInstance().signOut();
-
     }
-
 }

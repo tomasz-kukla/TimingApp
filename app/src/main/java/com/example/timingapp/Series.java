@@ -1,6 +1,5 @@
 package com.example.timingapp;
 
-import java.util.ArrayList;
 
 public class Series {
 
