@@ -112,24 +112,16 @@ public class ShowFragment extends Fragment {
             call.enqueue(new Callback<Users_Shows>() {
                 @Override
                 public void onResponse(Call<Users_Shows> call, Response<Users_Shows> response) {
-
                 }
-
                 @Override
                 public void onFailure(Call<Users_Shows> call, Throwable t) {
-
                 }
             });
 
         });
 
-
-
-
-
         SharedPreferences settings = this.getActivity().getSharedPreferences("PREFS", 0);
         return view;
     }
-
 
 }
