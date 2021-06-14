@@ -24,6 +24,9 @@ public interface JsonPlaceHolderApi {
     @POST("users/{userId}/shows/{showId}")
     Call<Users_Shows> createUserShow(@Path("userId") String userId, @Path("showId") String showId, @Body Users_Shows users_shows);
 
+    @GET("users/{userId}/shows")
+    Call<List<Users_List>> getFavourites(@Path("userId") String userId);
+
 
 
 }

@@ -1,12 +1,34 @@
 package com.example.timingapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +36,9 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class FavouriteFragment extends Fragment {
+
+    GridView gridView;
+    public static List<Users_List> users_lists;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -56,9 +81,92 @@ public class FavouriteFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_favourite, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        gridView = view.findViewById(R.id.gridViewMain);
+
+        users_lists = new ArrayList<>();
+
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:8082/")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userId = user.getUid();
+
+        JsonPlaceHolderApi jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
+        Call<List<Users_List>> call = jsonPlaceHolderApi.getFavourites(userId);
+
+        call.enqueue(new Callback<List<Users_List>>() {
+            @Override
+            public void onResponse(Call<List<Users_List>> call, Response<List<Users_List>> response) {
+                if(!response.isSuccessful()){;}
+                users_lists = response.body();
+//                Toast.makeText(getActivity(), "Extracted: " + users_lists ,Toast.LENGTH_SHORT).show();
+                gridView.setAdapter(new ShowAdapter(response.body(),getActivity().getApplicationContext()));
+
+                gridView.setOnItemClickListener((parent, view1, position, id) -> {
+
+                    ShowFragment showFragment = new ShowFragment();
+                    Bundle args = new Bundle();
+                    args.putString("name", users_lists.get(position).getShowDAO().getName());
+                    args.putString("id", users_lists.get(position).getShowDAO().getName());
+
+//                    Toast.makeText(getActivity(), "Name: " +users_lists.get(position).getShowDAO().getName() ,Toast.LENGTH_SHORT).show();
+
+                    showFragment.setArguments(args);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.add(R.id.fragment_container, showFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                });
+            }
+            @Override
+            public void onFailure(Call<List<Users_List>> call, Throwable t) {
+
+            }
+        });
+
+        SharedPreferences settings = this.getActivity().getSharedPreferences("PREFS", 0);
+        return view;
+
+    }
+
+    public class ShowAdapter extends BaseAdapter {
+        public List<Users_List> users_lists;
+        public Context context;
+
+        public ShowAdapter(List<Users_List> users_lists, Context context) {
+            this.users_lists = users_lists;
+            this.context = context;
+        }
+
+        @Override
+        public int getCount() {
+            return users_lists.size();
+        }
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = LayoutInflater.from(context).inflate(R.layout.row_data, null);
+            TextView name = view.findViewById(R.id.showTitle);
+            name.setText(users_lists.get(position).getShowDAO().getName());
+            return view;
+        }
+
     }
 }
