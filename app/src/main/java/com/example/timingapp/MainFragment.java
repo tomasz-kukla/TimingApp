@@ -112,29 +112,25 @@ public class MainFragment extends Fragment {
                 if(!response.isSuccessful()){;}
 
                 seriesList = response.body();
+//                Toast.makeText(getActivity(), "Extracted: " + seriesList ,Toast.LENGTH_SHORT).show();
 
                 gridView.setAdapter(new ShowAdapter(response.body(),getActivity().getApplicationContext()));
+                gridView.setOnItemClickListener((parent, view1, position, id) -> {
 
-                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                        ShowFragment showFragment = new ShowFragment();
-                        Bundle args = new Bundle();
-                        args.putString("name", seriesList.get(position).getName());
-                        args.putString("id", seriesList.get(position).getId());
-
-                        Toast.makeText(getActivity(), "Name: " +seriesList.get(position).getId() ,Toast.LENGTH_SHORT).show();
-
-                        showFragment.setArguments(args);
-                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.add(R.id.fragment_container, showFragment);
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-
-                    }
+                    ShowFragment showFragment = new ShowFragment();
+                    Bundle args = new Bundle();
+                    args.putString("name", seriesList.get(position).getName());
+                    args.putString("id", seriesList.get(position).getId());
+//                    Toast.makeText(getActivity(), "Name: " +seriesList.get(position).getId() ,Toast.LENGTH_SHORT).show();
+                    showFragment.setArguments(args);
+                    //Navigate To ShowFragment to display detailed info about show
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.add(R.id.fragment_container, showFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
                 });
+
             }
 
             @Override
@@ -144,7 +140,6 @@ public class MainFragment extends Fragment {
 
         SharedPreferences settings = this.getActivity().getSharedPreferences("PREFS", 0);
         return view;
-
     }
 
     public class ShowAdapter extends BaseAdapter{
@@ -156,17 +151,14 @@ public class MainFragment extends Fragment {
             this.context = context;
         }
 
-
         @Override
         public int getCount() {
             return seriesList.size();
         }
-
         @Override
         public Object getItem(int position) {
             return null;
         }
-
         @Override
         public long getItemId(int position) {
             return position;
@@ -175,18 +167,11 @@ public class MainFragment extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View view = LayoutInflater.from(context).inflate(R.layout.row_data, null);
-
             TextView name = view.findViewById(R.id.showTitle);
-
             name.setText(seriesList.get(position).getName());
-
             return view;
         }
 
     }
-
-
-
-
 
 }
