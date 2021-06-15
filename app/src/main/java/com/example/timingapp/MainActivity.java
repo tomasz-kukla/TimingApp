@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_profile:
                 selectedFragment = new ProfileFragment();
                 break;
+            case R.id.nav_camera:
+                selectedFragment = new CameraFragment();
+                break;
         }
 
         getSupportFragmentManager()
