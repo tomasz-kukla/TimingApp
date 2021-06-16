@@ -125,6 +125,24 @@ public class DetailShowFragment extends Fragment {
                 seriesList = response.body().getSeasonList();
 //                Toast.makeText(getActivity(), "Extracted: " +seriesList.toString(),Toast.LENGTH_SHORT).show();
                 gridView.setAdapter(new DetailShowAdapter(seriesList,getActivity().getApplicationContext()));
+
+                gridView.setOnItemClickListener((parent, view1, position, id) -> {
+
+                    SeasonFragment seasonFragment = new SeasonFragment();
+                    Bundle args = new Bundle();
+                    args.putString("nameShow", showName);
+                    args.putString("idShow", showId);
+                    args.putString("noSeason", Integer.toString(seriesList.get(position).getNoOfSeason()));
+                    args.putString("idSeason", seriesList.get(position).getId());
+//                    Toast.makeText(getActivity(), "Name: " +seriesList.get(position).getId() ,Toast.LENGTH_SHORT).show();
+                    seasonFragment.setArguments(args);
+                    //Navigate To ShowFragment to display detailed info about show
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.add(R.id.fragment_container, seasonFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                });
             }
 
             @Override
