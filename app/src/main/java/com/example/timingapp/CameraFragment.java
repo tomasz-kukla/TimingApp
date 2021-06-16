@@ -73,54 +73,53 @@ public class CameraFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_camera, container, false);
 
-//        btScan = view.findViewById(R.id.bt_scan);
-//
-//        btScan.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                IntentIntegrator intentIntegrator = new IntentIntegrator(
-//                        getActivity()
-//                );
-//                intentIntegrator.setPrompt("For flash use volume key up");
-//                intentIntegrator.setBeepEnabled(true);
-//                intentIntegrator.setOrientationLocked(true);
-//                intentIntegrator.setCaptureActivity(Capture.class);
-//                intentIntegrator.initiateScan();
-//
-//
-//            }
-//        });
+        btScan = view.findViewById(R.id.bt_scan);
 
+        btScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentIntegrator intentIntegrator = new IntentIntegrator(
+                        getActivity()
+                );
+                intentIntegrator.setPrompt("For flash use volume key up");
+                intentIntegrator.setBeepEnabled(true);
+                intentIntegrator.setOrientationLocked(true);
+                intentIntegrator.setCaptureActivity(Capture.class);
+                intentIntegrator.initiateScan();
+
+
+            }
+        });
 
 
         return view;
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-//
-//        if(intentResult.getContents() != null) {
-//            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//            Toast.makeText(getContext().getApplicationContext(), "Scan: "+intentResult.getContents(), Toast.LENGTH_SHORT).show();
-//
-//            builder.setTitle("Result");
-//            builder.setMessage(intentResult.getContents());
-//            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    Toast.makeText(getContext().getApplicationContext(), "Scan: "+intentResult.getContents(), Toast.LENGTH_SHORT).show();
-//
-////                    dialog.dismiss();
-//                }
-//            });
-//            builder.show();
-//        } else {
-//            Toast.makeText(getContext().getApplicationContext(), "Ooopsie Sis u did not scan anythin", Toast.LENGTH_SHORT).show();
-//        }
-//    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+
+        if(intentResult.getContents() != null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            Toast.makeText(getContext().getApplicationContext(), "Scan: "+intentResult.getContents(), Toast.LENGTH_SHORT).show();
+
+            builder.setTitle("Result");
+            builder.setMessage(intentResult.getContents());
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getContext().getApplicationContext(), "Scan: "+intentResult.getContents(), Toast.LENGTH_SHORT).show();
+
+                    dialog.dismiss();
+                }
+            });
+            builder.show();
+        } else {
+            Toast.makeText(getContext().getApplicationContext(), "Ooopsie Sis u did not scan anythin", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 }
 
