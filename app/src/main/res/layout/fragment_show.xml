@@ -6,36 +6,59 @@
     android:background="@color/white"
     tools:context=".ShowFragment">
 
-    <Button
-        android:id="@+id/watch_list_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_centerHorizontal="true"
-        android:text="Add to watch list"
+<!--    <RelativeLayout-->
+<!--        android:layout_width="420dp"-->
+<!--        android:layout_height="150dp"-->
+<!--        android:id="@+id/layout_show">-->
 
-        />
+<!--        <Button-->
+<!--            android:id="@+id/watch_list_btn"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:text="Add to watch list"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginRight="20dp"-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:gravity="center"/>-->
 
-    <TextView
-        android:id="@+id/show_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="30dp"
-        android:text="Show Name"
-        />
-    <TextView
-        android:id="@+id/show_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_below="@+id/show_name"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="20dp"
-        android:text="Show id"
-        />
+<!--        <TextView-->
+<!--            android:id="@+id/show_name"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textColorHighlight="#51041F"-->
+<!--            android:layout_marginTop="60dp"-->
+<!--            android:textSize="35dp"-->
+<!--            android:text="Show Name"/>-->
+<!--        <TextView-->
+<!--            android:id="@+id/show_id"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_below="@+id/show_name"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:textSize="20dp"-->
+<!--            android:text="Show id"-->
+<!--            />-->
+
+<!--    </RelativeLayout>-->
+
+
+<!--    <FrameLayout-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/layout_show">-->
+
+<!--        <ListView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/show_list"/>-->
+
+<!--    </FrameLayout>-->
+
+
 
 </RelativeLayout>
