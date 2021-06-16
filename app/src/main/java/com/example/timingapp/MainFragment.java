@@ -112,12 +112,12 @@ public class MainFragment extends Fragment {
                 if(!response.isSuccessful()){;}
 
                 seriesList = response.body();
-//                Toast.makeText(getActivity(), "Extracted: " + seriesList ,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Extracted: " + seriesList ,Toast.LENGTH_SHORT).show();
 
                 gridView.setAdapter(new ShowAdapter(response.body(),getActivity().getApplicationContext()));
                 gridView.setOnItemClickListener((parent, view1, position, id) -> {
 
-                    ShowFragment showFragment = new ShowFragment();
+                    DetailShowFragment showFragment = new DetailShowFragment();
                     Bundle args = new Bundle();
                     args.putString("name", seriesList.get(position).getName());
                     args.putString("id", seriesList.get(position).getId());
@@ -156,9 +156,7 @@ public class MainFragment extends Fragment {
             return seriesList.size();
         }
         @Override
-        public Object getItem(int position) {
-            return null;
-        }
+        public Object getItem(int position) { return null; }
         @Override
         public long getItemId(int position) {
             return position;
