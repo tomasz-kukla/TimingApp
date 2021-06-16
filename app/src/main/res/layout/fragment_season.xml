@@ -27,15 +27,15 @@
             android:id="@+id/show_id_season"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/show_name_season"
+            android:layout_below="@+id/show_id_season"
             android:layout_centerVertical="true"
             android:textSize="20dp"
             android:text="Show id_season"
             />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
             android:id="@+id/text_season"
             android:gravity="center"
             android:layout_centerHorizontal="true"
@@ -48,9 +48,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_toRightOf="@+id/show_name_season"
-            android:layout_below="@+id/show_name_season"
+            android:id="@+id/season_no"
+            android:layout_marginRight="15dp"
+            android:layout_below="@+id/show_id_season"
             android:textStyle="bold"
             android:textSize="20dp"
             android:text="seasonNo:"
@@ -78,7 +78,7 @@
         android:layout_marginTop="180dp">
 
         <GridView
-            android:id="@+id/gridViewSeriesDetail"
+            android:id="@+id/gridViewEpisodeDetail"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_marginTop="20dp"
