@@ -112,10 +112,10 @@ public class FavouriteFragment extends Fragment {
 
                 gridView.setOnItemClickListener((parent, view1, position, id) -> {
 
-                    ShowFragment showFragment = new ShowFragment();
+                    DetailShowFragment showFragment = new DetailShowFragment();
                     Bundle args = new Bundle();
                     args.putString("name", users_lists.get(position).getShowDAO().getName());
-                    args.putString("id", users_lists.get(position).getShowDAO().getName());
+                    args.putString("id", users_lists.get(position).getShowDAO().getId());
 
 //                    Toast.makeText(getActivity(), "Name: " +users_lists.get(position).getShowDAO().getName() ,Toast.LENGTH_SHORT).show();
 
