@@ -45,6 +45,7 @@ public class DetailShowFragment extends Fragment {
     TextView show_id;
     Button watch_list;
     GridView gridView;
+
     public static List<Season> seriesList;
 
     // TODO: Rename parameter arguments, choose names that match
