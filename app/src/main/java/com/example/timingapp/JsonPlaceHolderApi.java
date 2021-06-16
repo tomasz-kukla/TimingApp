@@ -27,6 +27,9 @@ public interface JsonPlaceHolderApi {
     @GET("users/{userId}/shows")
     Call<List<Users_List>> getFavourites(@Path("userId") String userId);
 
+    @GET("shows/details/{id}")
+    Call<SeriesDetail> getShowDetail(@Path("id") String id);
+
 
 
 }
