@@ -112,7 +112,7 @@ public class MainFragment extends Fragment {
                 if(!response.isSuccessful()){;}
 
                 seriesList = response.body();
-                Toast.makeText(getActivity(), "Extracted: " + seriesList ,Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Extracted: " + seriesList ,Toast.LENGTH_SHORT).show();
 
                 gridView.setAdapter(new ShowAdapter(response.body(),getActivity().getApplicationContext()));
                 gridView.setOnItemClickListener((parent, view1, position, id) -> {
@@ -150,7 +150,6 @@ public class MainFragment extends Fragment {
             this.seriesList = seriesList;
             this.context = context;
         }
-
         @Override
         public int getCount() {
             return seriesList.size();

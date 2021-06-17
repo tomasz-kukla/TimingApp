@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -117,8 +119,28 @@ public class SeasonFragment extends Fragment {
                 if(!response.isSuccessful()){;}
 
                 episodeLists = response.body().getEpisodes();
-//                Toast.makeText(getActivity(), "Extracted: " +episodeLists.toString(),Toast.LENGTH_SHORT).show();
                 gridView.setAdapter(new DetailSeasonAdapter(episodeLists,getActivity().getApplicationContext()));
+
+                gridView.setOnItemClickListener((parent, view1, position, id) -> {
+
+                    EpisodeFragment episodeFragment = new EpisodeFragment();
+                    Bundle args = new Bundle();
+                    args.putString("nameShow", show_name);
+                    args.putString("idShow", show_id);
+                    args.putString("noSeason", Integer.toString(episodeLists.get(position).getNoOfEpisode()));
+                    args.putString("titleSeason", episodeLists.get(position).getTitle());
+                    args.putString("idSeason", season_id);
+                    args.putString("idEpisode", episodeLists.get(position).getId());
+                    args.putString("nameEpisode", Integer.toString(episodeLists.get(position).getNoOfEpisode()));
+//                    Toast.makeText(getActivity(), "Name: " +seriesList.get(position).getId() ,Toast.LENGTH_SHORT).show();
+                    episodeFragment.setArguments(args);
+                    //Navigate To ShowFragment to display detailed info about show
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.add(R.id.fragment_container, episodeFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                });
 
             }
 

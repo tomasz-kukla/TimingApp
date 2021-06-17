@@ -33,6 +33,7 @@ public interface JsonPlaceHolderApi {
     @GET("shows/details/{showId}/seasons/{seasonId}")
     Call<SeasonDetail> getSeasonDetail(@Path("showId") String showId, @Path("seasonId") String seasonId);
 
-
-
+    @GET("shows/details/{showId}/seasons/{seasonId}/episodes/{episodeId}")
+    Call<Episode> getEpisode(@Path("showId") String showId, @Path("seasonId") String seasonId, @Path("episodeId") String episodeId);
+    
 }
