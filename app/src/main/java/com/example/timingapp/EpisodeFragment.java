@@ -134,7 +134,6 @@ public class EpisodeFragment extends Fragment {
             }
         });
 
-
         return view;
     }
 }

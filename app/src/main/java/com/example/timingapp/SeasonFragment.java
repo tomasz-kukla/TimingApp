@@ -127,7 +127,7 @@ public class SeasonFragment extends Fragment {
                     Bundle args = new Bundle();
                     args.putString("nameShow", show_name);
                     args.putString("idShow", show_id);
-                    args.putString("noSeason", Integer.toString(episodeLists.get(position).getNoOfEpisode()));
+                    args.putString("noSeason", season_no);
                     args.putString("titleSeason", episodeLists.get(position).getTitle());
                     args.putString("idSeason", season_id);
                     args.putString("idEpisode", episodeLists.get(position).getId());

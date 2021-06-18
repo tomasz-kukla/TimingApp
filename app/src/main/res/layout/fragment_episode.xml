@@ -70,19 +70,18 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginRight="10dp"
                     android:textSize="20sp"
+                    android:text="Episode:"
+                    android:layout_marginRight="10dp"
                     android:textColor="@color/white"
-                    android:text="Episode: " />
+                    android:gravity="center"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
                     android:textSize="20sp"
+                    android:text="SeasonNo"
                     android:textColor="@color/white"
-                    android:text="episodeNo"
                     android:id="@+id/episode_no"
                     android:gravity="center"/>
 
