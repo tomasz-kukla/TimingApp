@@ -103,7 +103,7 @@ public class DetailShowFragment extends Fragment {
         String showName = getArguments().getString("name");
 
         show_id.setText(showId);
-        show_name.setText(showName);
+
 
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -124,6 +124,7 @@ public class DetailShowFragment extends Fragment {
                 if(!response.isSuccessful()){
                 }
                 seriesList = response.body().getSeasonList();
+                show_name.setText(response.body().getName());
 //                Toast.makeText(getActivity(), "Extracted: " +seriesList.toString(),Toast.LENGTH_SHORT).show();
                 gridView.setAdapter(new DetailShowAdapter(seriesList,getActivity().getApplicationContext()));
 
