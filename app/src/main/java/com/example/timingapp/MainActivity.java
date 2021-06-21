@@ -2,8 +2,11 @@ package com.example.timingapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 selectedFragment = new ProfileFragment();
                 break;
             case R.id.nav_camera:
-                selectedFragment = new CameraFragment();
+                selectedFragment = new ScanFragment();
                 break;
         }
 
@@ -52,5 +55,6 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
         return true;
     };
+
 
 }
