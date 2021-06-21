@@ -131,7 +131,18 @@ public class FavouriteFragment extends Fragment {
                 gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                        Toast.makeText(getActivity(), "Long press",Toast.LENGTH_SHORT).show();
+
+                        JsonPlaceHolderApi jsonPlaceHolderApiDelete = retrofit.create(JsonPlaceHolderApi.class);
+                        Call<Void> callDelete = jsonPlaceHolderApiDelete.deleteFavourite(userId,users_lists.get(position).getShowDAO().getId());
+                        callDelete.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                Toast.makeText(getActivity(), "Deleted show from WatchList: " + users_lists.get(position).getShowDAO().getName(),Toast.LENGTH_SHORT).show();
+                            }
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) { ; }
+                        });
+
                         return false;
                     }
                 });
