@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="420dp"
-        android:layout_height="180dp"
+        android:layout_height="150dp"
         android:id="@+id/layout_show_season">
 
         <TextView
@@ -23,15 +23,15 @@
             android:textSize="35dp"
             android:text="Show Name"/>
 
-        <TextView
-            android:id="@+id/show_id_season"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/show_id_season"
-            android:layout_centerVertical="true"
-            android:textSize="20dp"
-            android:text="Show id_season"
-            />
+<!--        <TextView-->
+<!--            android:id="@+id/show_id_season"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/show_id_season"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:textSize="20dp"-->
+<!--            android:text="Show id_season"-->
+<!--            />-->
 
         <TextView
             android:layout_width="120dp"
@@ -50,7 +50,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/season_no"
             android:layout_marginRight="15dp"
-            android:layout_below="@+id/show_id_season"
+            android:layout_toRightOf="@id/text_season"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:textStyle="bold"
             android:textSize="20dp"
             android:text="seasonNo:"
@@ -75,7 +77,7 @@
         android:layout_width="1200dp"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:layout_marginTop="180dp">
+        android:layout_marginTop="125dp">
 
         <GridView
             android:id="@+id/gridViewEpisodeDetail"
