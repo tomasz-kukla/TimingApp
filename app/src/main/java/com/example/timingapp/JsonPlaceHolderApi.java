@@ -39,6 +39,15 @@ public interface JsonPlaceHolderApi {
     @DELETE("users/{userId}/shows/{showOnWatchedListId}")
     Call<Void> deleteFavourite(@Path("userId") String userId, @Path("showOnWatchedListId") String showId);
 
+    @POST("users/{userId}/shows/{showId}/seasons/{seasonId}/episodes/{episodeId}")
+    Call<EpisodeFav> addWatched(@Path("userId") String userId, @Path("showId") String showId, @Path("seasonId") String seasonId, @Path("episodeId") String episodeId, @Body EpisodeFav episodeFav);
+
+    @GET("users/{userId}/shows/{showId}/seasons/{seasonId}/episodes/{episodeId}")
+    Call<EpisodeFav> getWatched(@Path("userId") String userId, @Path("showId") String showId, @Path("seasonId") String seasonId, @Path("episodeId") String episodeId);
+
+    @DELETE("users/{userId}/shows/{showId}/seasons/{seasonId}/episodes/{episodeId}")
+    Call<Void> deleteWatched(@Path("userId") String userId, @Path("showId") String showId, @Path("seasonId") String seasonId, @Path("episodeId") String episodeId);
+
 
     
 }
