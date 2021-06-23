@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -104,6 +106,10 @@ public class EpisodeFragment extends Fragment {
         seasonTitle.setText(season_title);
         seasonNoView.setText(season_no);
 
+        //Get userID from Firerbase
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userId = user.getUid();
 
 
         Gson gson = new GsonBuilder()
@@ -125,13 +131,36 @@ public class EpisodeFragment extends Fragment {
 
                 descriptionView.setText(response.body().getDescription());
                 noEpisode.setText(Integer.toString(response.body().getNoOfEpisode()));
+                String idEpisode = response.body().getId();
+
+                //POST add episode as watched
+                watchedBtn.setOnClickListener(v -> {
+                    Toast.makeText(getActivity(), season_title + " marked as watched!",Toast.LENGTH_SHORT).show();
+                    EpisodeFav episodeFav = new EpisodeFav(true);
+                    JsonPlaceHolderApi jsonPlaceHolderApiPOST = retrofit.create(JsonPlaceHolderApi.class);
+                    Call<EpisodeFav> callPOST = jsonPlaceHolderApiPOST.addWatched(userId, show_id, season_id, episode_id, episodeFav);
+                    callPOST.enqueue(new Callback<EpisodeFav>() {
+                        @Override
+                        public void onResponse(Call<EpisodeFav> call1, Response<EpisodeFav> response1) {}
+                        @Override
+                        public void onFailure(Call<EpisodeFav> call1, Throwable t) {}
+                    });
+                });
+
+                //GET
+                JsonPlaceHolderApi jsonPlaceHolderApiGET= retrofit.create(JsonPlaceHolderApi.class);
+                Call<EpisodeFav> callPOST = jsonPlaceHolderApiGET.getWatched(userId, show_id, season_id, episode_id);
+
+
+
+
+
+
+
 
             }
-
             @Override
-            public void onFailure(Call<Episode> call, Throwable t) {
-
-            }
+            public void onFailure(Call<Episode> call, Throwable t) {}
         });
 
         return view;
