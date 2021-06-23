@@ -82,7 +82,7 @@ public class ProfileFragment extends Fragment {
         etUsername = view.findViewById(R.id.profile_username);
         etPassword = view.findViewById(R.id.profile_password);
         etEmail = view.findViewById(R.id.profile_email);
-        etPhone = view.findViewById(R.id.profile_phone);
+//        etPhone = view.findViewById(R.id.profile_phone);
 
         logoutBtn = view.findViewById(R.id.logout_btn);
         changeBtn = view.findViewById(R.id.change_btn);
@@ -92,12 +92,13 @@ public class ProfileFragment extends Fragment {
 
         String email = user.getEmail();
         String uid = user.getUid();
-        String phone = user.getPhoneNumber();
+//        String phone = user.getPhoneNumber();
 
         SharedPreferences settings = this.getActivity().getSharedPreferences("PREFS", 0);
         etEmail.setText(settings.getString(email, email));
         etUsername.setText(settings.getString(uid, uid)); //TODO change -> uid username
-        etPhone.setText(settings.getString(phone, phone));
+        etUsername.setEnabled(false);
+//        etPhone.setText(settings.getString(phone, phone));
 
         changeBtn.setOnClickListener(v -> {
             String emailIO = etEmail.getText().toString().trim();
@@ -118,19 +119,23 @@ public class ProfileFragment extends Fragment {
             user.updateEmail(emailIO)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            Toast.makeText(getActivity(),"Changes applied",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Email changed!", Toast.LENGTH_SHORT).show();
 
                         }
                     });
-        if (passwordIO.length() != 0) {
-            user.updatePassword(passwordIO)
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getActivity(),"Changes applied", Toast.LENGTH_SHORT).show();
+            if (passwordIO.length() != 0) {
+                if (passwordIO.length() >= 6 ) {
+                    user.updatePassword(passwordIO)
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(getActivity(), "Password changed!", Toast.LENGTH_SHORT).show();
 
-                        }
-                    });
-        }
+                                }
+                            });
+                } else {
+                    Toast.makeText(getActivity(), "Password cannot be shorter than 6 characters", Toast.LENGTH_SHORT).show();
+                }
+                }
         });
 
         deleteBtn.setOnClickListener(v -> {
