@@ -128,23 +128,20 @@ public class FavouriteFragment extends Fragment {
                     fragmentTransaction.commit();
                 });
 
-                gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                gridView.setOnItemLongClickListener((parent, view12, position, id) -> {
 
-                        JsonPlaceHolderApi jsonPlaceHolderApiDelete = retrofit.create(JsonPlaceHolderApi.class);
-                        Call<Void> callDelete = jsonPlaceHolderApiDelete.deleteFavourite(userId,users_lists.get(position).getShowDAO().getId());
-                        callDelete.enqueue(new Callback<Void>() {
-                            @Override
-                            public void onResponse(Call<Void> call, Response<Void> response) {
-                                Toast.makeText(getActivity(), "Deleted show from WatchList: " + users_lists.get(position).getShowDAO().getName(),Toast.LENGTH_SHORT).show();
-                            }
-                            @Override
-                            public void onFailure(Call<Void> call, Throwable t) { ; }
-                        });
+                    JsonPlaceHolderApi jsonPlaceHolderApiDelete = retrofit.create(JsonPlaceHolderApi.class);
+                    Call<Void> callDelete = jsonPlaceHolderApiDelete.deleteFavourite(userId,users_lists.get(position).getShowDAO().getId());
+                    callDelete.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call1, Response<Void> response1) {
+                            Toast.makeText(getActivity(), "Deleted show from WatchList: " + users_lists.get(position).getShowDAO().getName(),Toast.LENGTH_SHORT).show();
+                        }
+                        @Override
+                        public void onFailure(Call<Void> call1, Throwable t) { ; }
+                    });
 
-                        return false;
-                    }
+                    return false;
                 });
 
 
