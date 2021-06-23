@@ -17,7 +17,7 @@
             <GridView
                 android:id="@+id/gridViewMain"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="680dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
                 android:columnWidth="200dp"
