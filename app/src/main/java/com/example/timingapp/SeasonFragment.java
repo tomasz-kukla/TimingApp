@@ -86,7 +86,7 @@ public class SeasonFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_season, container, false);
 
         showName = view.findViewById(R.id.show_name_season);
-        showId = view.findViewById(R.id.show_id_season);
+//        showId = view.findViewById(R.id.show_id_season);
         seasonId = view.findViewById(R.id.season_no);
         gridView = view.findViewById(R.id.gridViewEpisodeDetail);
 
@@ -98,7 +98,7 @@ public class SeasonFragment extends Fragment {
         String season_no = getArguments().getString("noSeason");
 
         showName.setText(show_name);
-        showId.setText(show_id);
+//        showId.setText(show_id);
         seasonId.setText(season_id);
 
         Gson gson = new GsonBuilder()
