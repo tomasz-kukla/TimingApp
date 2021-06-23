@@ -57,7 +57,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         editUsername = (EditText) findViewById(R.id.username);
         editPassword = (EditText) findViewById(R.id.password);
         editEmail = (EditText) findViewById(R.id.email);
-        editPhone = (EditText) findViewById(R.id.phone);
+//        editPhone = (EditText) findViewById(R.id.phone);
 
     }
 
@@ -80,7 +80,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         String email = editEmail.getText().toString().trim();
         String password = editPassword.getText().toString().trim();
         String username = editUsername.getText().toString().trim();
-        String phone = editPhone.getText().toString().trim();
+//        String phone = editPhone.getText().toString().trim();
 
         if (username.isEmpty()) {
             editUsername.setError("Username is required");
@@ -94,11 +94,11 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             return;
         }
 
-        if (phone.isEmpty()) {
-            editPhone.setError("Phone is required");
-            editPhone.requestFocus();
-            return;
-        }
+//        if (phone.isEmpty()) {
+//            editPhone.setError("Phone is required");
+//            editPhone.requestFocus();
+//            return;
+//        }
 
         if (email.isEmpty()) {
             editEmail.setError("Email is required");
@@ -120,7 +120,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
 
         mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
-                User user = new User(username,email,phone);
+                User user = new User(username,email);
                 sendCredentials(email, password);
                 Toast.makeText(Register.this, "Authentication confirmed.",
                         Toast.LENGTH_SHORT).show();
